@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/timonwong/prometheus-webhook-dingtalk/models"
@@ -33,6 +34,9 @@ func BuildDingTalkNotification(promMessage *models.WebhookMessage) (*models.Ding
 		Markdown: &models.DingTalkNotificationMarkdown{
 			Title: title,
 			Text:  content,
+		},
+		At: &models.DingTalkNotificationAt{
+			IsAtAll: strings.Contains(content, "@All"),
 		},
 	}
 	return notification, nil
